@@ -41,4 +41,4 @@ ENV PORT=${PORT}
 EXPOSE ${PORT}
 
 # Start the app
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npm run setup && npm start"]
