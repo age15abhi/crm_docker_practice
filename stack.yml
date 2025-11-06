@@ -1,0 +1,50 @@
+version: "3.9"
+
+networks:
+  idurar-net:
+    driver: overlay
+
+services:
+
+  crm_frontend:
+    image: abhi905040/idurar-erp-crm-frontend:latest
+    networks:
+      - idurar-net
+    ports:
+      - "80:80"
+    depends_on:
+      - crm_backend
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+
+  crm_backend:
+    image: abhi905040/idurar-erp-crm-backend:latest
+    networks:
+      - idurar-net
+    ports:
+      - "8888:8888"
+    env_file:
+    - ./backend.env
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+
+  mongodb:
+    image: mongo:7
+    networks:
+      - idurar-net
+    volumes:
+      - mongo_data:/data/db
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  mongo_data:

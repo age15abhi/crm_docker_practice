@@ -12,7 +12,7 @@ services:
 
 
   backend:
-    build: ./backend
+    image: abhi905040/idurar-erp-crm-backend
     container_name: crm_backend
     ports:
       - "8888:8888"
@@ -24,7 +24,7 @@ services:
 
 
   frontend:
-    build: ./frontend
+    image: abhi905040/idurar-erp-crm-frontend
     container_name: crm_frontend
     ports:
       - "80:80"
